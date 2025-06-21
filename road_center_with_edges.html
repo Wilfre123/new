@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f45f91181874339928d75a8620f616f3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; top: 20px; left: 70px; width: 160px; background: white;
+    padding: 10px; border: 1px solid black; border-radius: 5px; font-family: Arial;
+    font-size: 12px; z-index: 9999; max-height: 90vh; overflow-y: auto;" id="sidebar">
+    <label><b>Coordinate View</b></label>
+    <select onchange="toggleFormat(this.value)" style="margin-bottom: 10px; width: 100%;">
+        <option value="dms">DMS</option>
+        <option value="utm">UTM (E/N)</option>
+        <option value="ne">N/E</option>
+    </select>
+    <div id="coord-list">
+
+    <div>
+        <b>Point 1</b><br>
+        <span class="coord-dms">9°50'31.6"N<br>122°52'28.9"E</span>
+        <span class="coord-utm" style="display:none;">E: 486261.21<br>N: 1087959.88</span>
+        <span class="coord-ne" style="display:none;">N: 1087959.88<br>E: 486261.21</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 2</b><br>
+        <span class="coord-dms">9°50'48.5"N<br>122°52'17.3"E</span>
+        <span class="coord-utm" style="display:none;">E: 485907.87<br>N: 1088478.40</span>
+        <span class="coord-ne" style="display:none;">N: 1088478.40<br>E: 485907.87</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 3</b><br>
+        <span class="coord-dms">9°51'4.5"N<br>122°52'6.5"E</span>
+        <span class="coord-utm" style="display:none;">E: 485577.86<br>N: 1088967.78</span>
+        <span class="coord-ne" style="display:none;">N: 1088967.78<br>E: 485577.86</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 4</b><br>
+        <span class="coord-dms">9°51'10.0"N<br>122°52'14.1"E</span>
+        <span class="coord-utm" style="display:none;">E: 485811.46<br>N: 1089136.73</span>
+        <span class="coord-ne" style="display:none;">N: 1089136.73<br>E: 485811.46</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 5</b><br>
+        <span class="coord-dms">9°51'24.7"N<br>122°52'31.4"E</span>
+        <span class="coord-utm" style="display:none;">E: 486337.73<br>N: 1089587.77</span>
+        <span class="coord-ne" style="display:none;">N: 1089587.77<br>E: 486337.73</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 6</b><br>
+        <span class="coord-dms">9°51'12.2"N<br>122°52'37.3"E</span>
+        <span class="coord-utm" style="display:none;">E: 486517.81<br>N: 1089204.63</span>
+        <span class="coord-ne" style="display:none;">N: 1089204.63<br>E: 486517.81</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 7</b><br>
+        <span class="coord-dms">9°50'59.5"N<br>122°52'45.6"E</span>
+        <span class="coord-utm" style="display:none;">E: 486769.58<br>N: 1088814.35</span>
+        <span class="coord-ne" style="display:none;">N: 1088814.35<br>E: 486769.58</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 8</b><br>
+        <span class="coord-dms">9°50'51.0"N<br>122°52'42.5"E</span>
+        <span class="coord-utm" style="display:none;">E: 486673.53<br>N: 1088554.66</span>
+        <span class="coord-ne" style="display:none;">N: 1088554.66<br>E: 486673.53</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 9</b><br>
+        <span class="coord-dms">9°50'40.7"N<br>122°52'43.1"E</span>
+        <span class="coord-utm" style="display:none;">E: 486693.62<br>N: 1088236.22</span>
+        <span class="coord-ne" style="display:none;">N: 1088236.22<br>E: 486693.62</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 10</b><br>
+        <span class="coord-dms">9°50'37.6"N<br>122°52'41.4"E</span>
+        <span class="coord-utm" style="display:none;">E: 486640.04<br>N: 1088143.97</span>
+        <span class="coord-ne" style="display:none;">N: 1088143.97<br>E: 486640.04</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 11</b><br>
+        <span class="coord-dms">9°50'32.8"N<br>122°52'36.9"E</span>
+        <span class="coord-utm" style="display:none;">E: 486505.48<br>N: 1087996.02</span>
+        <span class="coord-ne" style="display:none;">N: 1087996.02<br>E: 486505.48</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 12</b><br>
+        <span class="coord-dms">9°50'30.7"N<br>122°52'33.6"E</span>
+        <span class="coord-utm" style="display:none;">E: 486402.61<br>N: 1087930.75</span>
+        <span class="coord-ne" style="display:none;">N: 1087930.75<br>E: 486402.61</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 13</b><br>
+        <span class="coord-dms">9°50'32.7"N<br>122°52'33.2"E</span>
+        <span class="coord-utm" style="display:none;">E: 486390.62<br>N: 1087993.53</span>
+        <span class="coord-ne" style="display:none;">N: 1087993.53<br>E: 486390.62</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    <div>
+        <b>Point 14</b><br>
+        <span class="coord-dms">9°50'31.6"N<br>122°52'28.9"E</span>
+        <span class="coord-utm" style="display:none;">E: 486261.21<br>N: 1087959.88</span>
+        <span class="coord-ne" style="display:none;">N: 1087959.88<br>E: 486261.21</span>
+    </div>
+    <hr style="margin:4px 0;">
+    
+    </div>
+</div>
+<script>
+function toggleFormat(fmt) {
+    document.querySelectorAll('.coord-dms').forEach(el => el.style.display = fmt === 'dms' ? 'block' : 'none');
+    document.querySelectorAll('.coord-utm').forEach(el => el.style.display = fmt === 'utm' ? 'block' : 'none');
+    document.querySelectorAll('.coord-ne').forEach(el => el.style.display = fmt === 'ne' ? 'block' : 'none');
+}
+</script>
+    
+<style>
+@media print { #button-container, #toggle-button { display: none; } }
+#toggle-button {
+    margin-top: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+</style>
+<script>
+let pointsVisible = true;
+function printMap() { window.print(); }
+function togglePoints() {
+    const markers = document.querySelectorAll('.leaflet-marker-icon, .leaflet-tooltip');
+    markers.forEach(el => el.style.display = pointsVisible ? 'none' : 'block');
+    pointsVisible = !pointsVisible;
+    document.getElementById('toggle-button').innerText = pointsVisible ? 'Hide Points' : 'Show Points';
+}
+</script>
+<div id="button-container" style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
+  <button onclick="printMap()" style="
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.4);">
+    🖸️ Print Map
+  </button><br>
+  <button id="toggle-button" onclick="togglePoints()">Hide Points</button>
+</div>
+    
+            <div class="folium-map" id="map_f45f91181874339928d75a8620f616f3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f45f91181874339928d75a8620f616f3 = L.map(
+                "map_f45f91181874339928d75a8620f616f3",
+                {
+                    center: [9.846987137914379, 122.87541167486553],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 18,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_f45f91181874339928d75a8620f616f3);
+
+            
+
+        
+    
+            var tile_layer_3eb936b63e77dd72ad869cc45ab5dec0 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3eb936b63e77dd72ad869cc45ab5dec0.addTo(map_f45f91181874339928d75a8620f616f3);
+        
+    
+            var poly_line_11b6713c40f1505327f58560189ab83a = L.polyline(
+                [[9.84212459007426, 122.87470104325112], [9.846813204316328, 122.87147674366982], [9.851238307748346, 122.86846523424411], [9.852767221279159, 122.87059514553613], [9.856848517143533, 122.87539338792784], [9.853383759435232, 122.87703708691741], [9.849854648140642, 122.87933460809926], [9.847505532665277, 122.87845946406006], [9.844625424384843, 122.87864374119192], [9.84379088070949, 122.87815538989965], [9.842452281836051, 122.87692868224336], [9.841861595379282, 122.87599071970898], [9.842429377614577, 122.87588115811678], [9.84212459007426, 122.87470104325112]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_f45f91181874339928d75a8620f616f3);
+        
+    
+            var feature_group_d54015d1f40a7ebd72188c92657e05eb = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_2f02dbb2ebc3a1b2da5c532383ae00a1 = L.marker(
+                [9.84212459007426, 122.87470104325112],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_aef53a8f35319dbeed8c4ce01eba3572 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                1\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_2f02dbb2ebc3a1b2da5c532383ae00a1.bindTooltip(
+                `<div>
+                     9°50'31.6"N, 122°52'28.9"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2f02dbb2ebc3a1b2da5c532383ae00a1.setIcon(div_icon_aef53a8f35319dbeed8c4ce01eba3572);
+            
+    
+            var marker_a0fadc3de9e20e411ea6075bc9afb29c = L.marker(
+                [9.846813204316328, 122.87147674366982],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_6075735bf93cab1aca019b4748ad9028 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                2\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_a0fadc3de9e20e411ea6075bc9afb29c.bindTooltip(
+                `<div>
+                     9°50'48.5"N, 122°52'17.3"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a0fadc3de9e20e411ea6075bc9afb29c.setIcon(div_icon_6075735bf93cab1aca019b4748ad9028);
+            
+    
+            var marker_1ad8b4ccb82cac6e430ccc85b77762c0 = L.marker(
+                [9.851238307748346, 122.86846523424411],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_722c314ddd34e7d3193b3bb346b38849 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                3\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_1ad8b4ccb82cac6e430ccc85b77762c0.bindTooltip(
+                `<div>
+                     9°51'4.5"N, 122°52'6.5"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1ad8b4ccb82cac6e430ccc85b77762c0.setIcon(div_icon_722c314ddd34e7d3193b3bb346b38849);
+            
+    
+            var marker_567db48165c1773acfc8ec6d0e5e62b6 = L.marker(
+                [9.852767221279159, 122.87059514553613],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_72d858f091ec232aa849494542ef2fc0 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                4\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_567db48165c1773acfc8ec6d0e5e62b6.bindTooltip(
+                `<div>
+                     9°51'10.0"N, 122°52'14.1"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_567db48165c1773acfc8ec6d0e5e62b6.setIcon(div_icon_72d858f091ec232aa849494542ef2fc0);
+            
+    
+            var marker_8335d21900e2442c54d867ac071f69e4 = L.marker(
+                [9.856848517143533, 122.87539338792784],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_7c311c060f21523c7da3777ace10eeb2 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                5\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8335d21900e2442c54d867ac071f69e4.bindTooltip(
+                `<div>
+                     9°51'24.7"N, 122°52'31.4"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8335d21900e2442c54d867ac071f69e4.setIcon(div_icon_7c311c060f21523c7da3777ace10eeb2);
+            
+    
+            var marker_2fac513c0fdcd2ddb9cb88fdc02dcbf4 = L.marker(
+                [9.853383759435232, 122.87703708691741],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_5d9ec62366820865e2f5a59067b97967 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                6\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_2fac513c0fdcd2ddb9cb88fdc02dcbf4.bindTooltip(
+                `<div>
+                     9°51'12.2"N, 122°52'37.3"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2fac513c0fdcd2ddb9cb88fdc02dcbf4.setIcon(div_icon_5d9ec62366820865e2f5a59067b97967);
+            
+    
+            var marker_4e03df166a25655fa43cf9599635156b = L.marker(
+                [9.849854648140642, 122.87933460809926],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_75235c40b08f710037c6d3ddf066b10a = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                7\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_4e03df166a25655fa43cf9599635156b.bindTooltip(
+                `<div>
+                     9°50'59.5"N, 122°52'45.6"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4e03df166a25655fa43cf9599635156b.setIcon(div_icon_75235c40b08f710037c6d3ddf066b10a);
+            
+    
+            var marker_42fec7b0bd96a7a2afcfa7f95afb7dd8 = L.marker(
+                [9.847505532665277, 122.87845946406006],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_32873303dc577877b54cedb2781cd8b8 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                8\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_42fec7b0bd96a7a2afcfa7f95afb7dd8.bindTooltip(
+                `<div>
+                     9°50'51.0"N, 122°52'42.5"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_42fec7b0bd96a7a2afcfa7f95afb7dd8.setIcon(div_icon_32873303dc577877b54cedb2781cd8b8);
+            
+    
+            var marker_27180daa069e4485025bc212dd9e9656 = L.marker(
+                [9.844625424384843, 122.87864374119192],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_203ce1904734676c6c78fa691cc4d233 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                9\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_27180daa069e4485025bc212dd9e9656.bindTooltip(
+                `<div>
+                     9°50'40.7"N, 122°52'43.1"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_27180daa069e4485025bc212dd9e9656.setIcon(div_icon_203ce1904734676c6c78fa691cc4d233);
+            
+    
+            var marker_5785577b1c9fcbabb2846b4940a95904 = L.marker(
+                [9.84379088070949, 122.87815538989965],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_09b9f1d3aa0a7b9939329dce0cddf05a = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                10\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_5785577b1c9fcbabb2846b4940a95904.bindTooltip(
+                `<div>
+                     9°50'37.6"N, 122°52'41.4"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5785577b1c9fcbabb2846b4940a95904.setIcon(div_icon_09b9f1d3aa0a7b9939329dce0cddf05a);
+            
+    
+            var marker_65007745b0bea07bbce6895bec4a0099 = L.marker(
+                [9.842452281836051, 122.87692868224336],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_87d52e8161c49b22f307d2171d022bfc = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                11\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_65007745b0bea07bbce6895bec4a0099.bindTooltip(
+                `<div>
+                     9°50'32.8"N, 122°52'36.9"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_65007745b0bea07bbce6895bec4a0099.setIcon(div_icon_87d52e8161c49b22f307d2171d022bfc);
+            
+    
+            var marker_8cefeb4130360dad17a53ceaba17175c = L.marker(
+                [9.841861595379282, 122.87599071970898],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_cc57eed58b56e6a155c1afee2033ae79 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                12\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_8cefeb4130360dad17a53ceaba17175c.bindTooltip(
+                `<div>
+                     9°50'30.7"N, 122°52'33.6"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8cefeb4130360dad17a53ceaba17175c.setIcon(div_icon_cc57eed58b56e6a155c1afee2033ae79);
+            
+    
+            var marker_682b7cde2a09cf659eb67d23adabba80 = L.marker(
+                [9.842429377614577, 122.87588115811678],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_5281eadfefdf6805b6206c7db9ed21c2 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                13\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_682b7cde2a09cf659eb67d23adabba80.bindTooltip(
+                `<div>
+                     9°50'32.7"N, 122°52'33.2"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_682b7cde2a09cf659eb67d23adabba80.setIcon(div_icon_5281eadfefdf6805b6206c7db9ed21c2);
+            
+    
+            var marker_344750186fca988d3e1a5439a18e6c3d = L.marker(
+                [9.84212459007426, 122.87470104325112],
+                {
+}
+            ).addTo(feature_group_d54015d1f40a7ebd72188c92657e05eb);
+        
+    
+            var div_icon_d1ddc725e9933842b8b09fe0a851f589 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"font-size: 10pt; background: white; border: 1px solid black;\n                border-radius: 50%; width: 24px; height: 24px; text-align: center;\n                line-height: 24px; font-weight: bold;\"\u003e\n                14\n            \u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+            marker_344750186fca988d3e1a5439a18e6c3d.bindTooltip(
+                `<div>
+                     9°50'31.6"N, 122°52'28.9"E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_344750186fca988d3e1a5439a18e6c3d.setIcon(div_icon_d1ddc725e9933842b8b09fe0a851f589);
+            
+    
+            feature_group_d54015d1f40a7ebd72188c92657e05eb.addTo(map_f45f91181874339928d75a8620f616f3);
+        
+</script>
+</html>
